@@ -1,0 +1,9 @@
+## Interface: 20501
+## Title: <Tentative> GuildMate
+## Notes: <Tentative> Guild Utility
+## Author: andrew-brainerd
+## Version: 1.0
+## SavedVariables: GuildLocker
+
+embeds.xml
+TentativeGuildMate.lua
