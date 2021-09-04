@@ -2,20 +2,25 @@ TentativeGuildMate = LibStub("AceAddon-3.0"):NewAddon("<Tentative> GuildMate", "
 
 function TentativeGuildMate:SaveMembers()
     TentativeGuildMate:Print("Saving Guild Data")
+
+    local playerName = GetUnitName("player", true)
+    local numTotalMembers, numOnlineMaxLevelMembers, numOnlineMembers = GetNumGuildMembers()
     local MembershipList = {}
 
-    MembershipList[name] = {}
-
-    numTotalMembers, numOnlineMaxLevelMembers, numOnlineMembers = GetNumGuildMembers()
+    MembershipList[playerName] = {}
+    MembershipList[playerName]["members"] = {}
 
     for i = 1, numTotalMembers do
         local name, rank, rankIndex, level, class, zone, note, officernote, online, status = GetGuildRosterInfo(i);
             
-        MembershipList[name] = {
+        MembershipList[playerName]["members"][i] = {
+            name = name,
             rank = rank,
             level = level,
             class = class,
+            note = note,
             zone = zone,
+            officernote = officernote,
             online = online
         }
     end
@@ -24,7 +29,12 @@ function TentativeGuildMate:SaveMembers()
 end
 
 TentativeGuildMate:RegisterEvent("PLAYER_ENTERING_WORLD", function()
-    name = GetUnitName("player", true)
     GuildLocker = {}
-    TentativeGuildMate:SaveMembers()
+    local guildName = GetGuildInfo("player")
+
+    TentativeGuildMate:Print("Guild Name: " .. guildName)
+
+    if (guildName == "Tentative") then
+        TentativeGuildMate:SaveMembers()
+    end
 end)
