@@ -1,8 +1,8 @@
 ## Interface: 20501
-## Title: <Tentative> GuildMate v1.0
+## Title: <Tentative> GuildMate v1.1
 ## Notes: <Tentative> Roster Updater
 ## Author: andrew-brainerd
-## Version: 1.0
+## Version: 1.1
 ## SavedVariables: GuildLocker
 
 embeds.xml

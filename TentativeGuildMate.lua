@@ -1,5 +1,7 @@
 TentativeGuildMate = LibStub("AceAddon-3.0"):NewAddon("<Tentative> GuildMate", "AceConsole-3.0", "AceEvent-3.0")
 
+lastUpdateTime = nil
+
 function TentativeGuildMate:SaveMembers()
     TentativeGuildMate:Print("Saving Guild Data")
 
@@ -26,15 +28,18 @@ function TentativeGuildMate:SaveMembers()
     end
 
     GuildLocker = MembershipList
+
+    lastUpdateTime = time()
 end
 
-TentativeGuildMate:RegisterEvent("PLAYER_ENTERING_WORLD", function()
-    GuildLocker = {}
+function TentativeGuildMate:ShouldUpdateGuild()
+    return lastUpdateTime == nil or time() - lastUpdateTime > 1000
+end
+
+TentativeGuildMate:RegisterEvent("GUILD_ROSTER_UPDATE", function()
     local guildName = GetGuildInfo("player")
 
-    TentativeGuildMate:Print("Guild Name: " .. guildName)
-
-    if (guildName == "Tentative") then
+    if (guildName == "Tentative" and TentativeGuildMate:ShouldUpdateGuild()) then
         TentativeGuildMate:SaveMembers()
     end
 end)
